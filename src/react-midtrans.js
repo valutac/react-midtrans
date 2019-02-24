@@ -95,6 +95,7 @@ export default class SnapMidtrans extends PureComponent {
  */
 SnapMidtrans.propTypes = {
   children: oneOfType([arrayOf(node), node]).isRequired,
+  clientKey: string.isRequired,
   token: string,
 
   /* @see @link {https://snap-docs.midtrans.com/#snap-js|Midtrans API 4 Callback} */

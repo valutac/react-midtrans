@@ -8,23 +8,42 @@ A Wrapper for Snap React Midtrans
 
 #### Table of Contents
 
+- [usage](#usage)
+    -   [Examples](#examples)
 - [SnapMidtrans](#snapmidtrans)
-  - [Parameters](#parameters)
-  - [Properties](#properties)
+    -   [Parameters](#parameters)
+    -   [Properties](#properties)
 
-###
+### usage
+
+#### Examples
+
+```javascript
+import React from 'react'
+import ReactDOM from 'react-dom'
+import ReactMidtrans from 'react-midtrans'
+
+ReactDOM.render(
+ <ReactMidtrans clentKey={'your-ker'} token={'payment-token'}>
+   <button> My Button For PayMe </button>
+ </ReactMidtrans>
+,document.getElementById('app')
+)
+```
+
+### 
 
 ### SnapMidtrans
 
 #### Parameters
 
-- `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**
+- `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 #### Properties
 
 - `children` **ReactElement** required
-- `token` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**
-- `onSuccess` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**
-- `onError` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**
-- `onPending` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**
-- `onClose` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**
+- `token` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+- `onSuccess` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** 
+- `onError` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** 
+- `onPending` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** 
+- `onClose` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** 
