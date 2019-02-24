@@ -6,27 +6,38 @@ const { oneOfType, arrayOf, node, func, string } = PropTypes
 export default class SnapMidtrans extends PureComponent {
   state = {
     children: null,
+    token: '',
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return nextProps.token !== prevState.token
+      ? { token: nextProps.token }
+      : null
   }
 
   constructor(props) {
     super(props)
+    const { NODE_ENV: ENV } = process.env
 
     // bind react-midtrans method
     this.mergeWithChildren = this.mergeWithChildren.bind(this)
-    this.onLoad = this.onLoad.bind(this)
+    // backup currentview
     this.currentViewport = document
       .getElementsByTagName('meta')
       .hasOwnProperty('viewport')
       ? document.getElementsByTagName('meta').viewport
       : ''
+    // create element for script
     this.snapScript = document.createElement('script')
 
-    if (process.env.NODE_ENV === 'production') {
-      this.snapScript.src = 'https://app.midtrans.com/snap/snap.js'
-    } else this.snapScript.src = 'https://app.sandbox.midtrans.com/snap/snap.js'
+    // checking environment mode
+    this.snapScript.src =
+      ENV === 'production'
+        ? 'https://app.midtrans.com/snap/snap.js'
+        : 'https://app.sandbox.midtrans.com/snap/snap.js'
 
     this.snapScript.type = 'text/javascript'
-    this.snapScript.onload = this.onLoad
+    this.snapScript.onload = this.onLoad.bind(this)
     this.snapScript.dataset.clientKey = props.clientKey
   }
 
@@ -50,7 +61,13 @@ export default class SnapMidtrans extends PureComponent {
         onClick: () => {
           // If Children have a onClick
           children.onClick && children.onClick()
-          this.state.snap.show()
+          if (this.state.token && this.state.token !== '') {
+            this.state.snap.pay(
+              this.state.token,
+              /** @todo options **/
+            )
+          }
+          this.props.onClick && this.props.onClick()
         },
       },
     )
@@ -65,9 +82,20 @@ export default class SnapMidtrans extends PureComponent {
   }
 }
 
+/**
+ * @module SnapMidtrans
+ * @param {Object} props
+ * @property {ReactElement} children - required
+ * @property {String} token
+ * @todo 4 callback
+ * @property {Function} onSuccess
+ * @property {Function} onError
+ * @property {Function} onPending
+ * @property {Function} onClose
+ */
 SnapMidtrans.propTypes = {
   children: oneOfType([arrayOf(node), node]).isRequired,
-  clientKey: string.isRequired,
+  token: string,
 
   /* @see @link {https://snap-docs.midtrans.com/#snap-js|Midtrans API 4 Callback} */
   onSuccess: func,
