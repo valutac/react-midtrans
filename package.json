@@ -1,0 +1,100 @@
+{
+  "name": "react-midtrans",
+  "version": "0.0.1",
+  "description": "ReactJS Integration For Midtrans Payment Gateway Frontend Integration",
+  "repository": "git@github.com:ri7nz/react-midtrans.git",
+  "author": "ri7nz <ri7nz.labs@gmail.com>",
+  "license": "MIT",
+  "source": "src/index.js",
+  "main": "dist/react-midtrans.js",
+  "module": "dist/react-midtrans.es.js",
+  "umd:main": "dist/react-midtrans.umd.js",
+  "files": [
+    "src",
+    "dist",
+    "react-midtrns"
+  ],
+  "peerDependencies": {
+    "react": "*"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": true
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      [
+        "transform-react-jsx"
+      ]
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.3",
+    "@babel/preset-env": "^7.3.1",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.1.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "bundlesize": "^0.17.1",
+    "documentation": "^9.2.0",
+    "eslint": "^5.14.1",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-config-react-app": "^3.0.7",
+    "eslint-plugin-flowtype": "^3.4.2",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.3.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "gzip-size-cli": "^3.0.0",
+    "husky": "^1.3.1",
+    "jest": "^24.1.0",
+    "lint-staged": "^8.1.4",
+    "microbundle": "^0.10.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.16.4",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "strip-json-comments-cli": "^1.0.1"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "bundlesize": [
+    {
+      "path": "./dist/*.js",
+      "maxSize": "2 kB"
+    }
+  ],
+  "scripts": {
+    "dev": "microbundle watch",
+    "build": "npm-run-all --silent -p build:main -s size docs",
+    "build:main": "microbundle",
+    "size": "strip-json-comments --no-whitespace dist/react-midtrans.js | gzip-size ",
+    "docs": "documentation readme src/*.js -q --section API && yarn fixreadme",
+    "lint": "eslint -c .eslintrc ./src --fix",
+    "prepare": "rm -rf dist && yarn build",
+    "test": "jest --config jest.config.js",
+    "test:watch": "jest --watch",
+    "test:size": "bundlesize",
+    "fixreadme": "node -e 'var fs=require(\"fs\");fs.writeFileSync(\"README.md\", fs.readFileSync(\"README.md\", \"utf8\").replace(/^-   /gm, \"- \"))'",
+    "release": "yarn -s prepare && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
+  }
+}
